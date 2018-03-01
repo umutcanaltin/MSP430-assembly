@@ -1,0 +1,56 @@
+;-------------------------------------------------------------------------------
+            .cdecls C,LIST,"msp430.h"       ; Include device header file
+            
+;-------------------------------------------------------------------------------
+            .def    RESET                   ; Export program entry-point to
+                                            ; make it known to linker.
+;-------------------------------------------------------------------------------
+            .text                           ; Assemble into program memory.
+            .retain                         ; Override ELF conditional linking
+                                            ; and retain current section.
+            .retainrefs                     ; And retain any sections that have
+
+
+;-------------------------------------------------------------------------------
+RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+
+
+;-------------------------------------------------------------------------------
+; Main loop here
+			mov.w #123,r9
+			mov.w r9,r7
+
+			mov.w #0x4400,r5
+			mov.w #99,r6
+			mov.w r6,0(r5)
+
+			mov.w &0x4400,r5
+
+			mov.w #0x004400,r7
+			mov.b #44,0(r7)
+			mov.b #33,1(r7)
+			mov.b #22,2(r7)
+			mov.b #11,3(r7)
+
+			mov #0,r6
+			add.b 0(r7),r6
+			add.b 1(r7),r6
+			add.b 2(r7),r6
+			add.b 3(r7),r6
+;-------------------------------------------------------------------------------
+
+                                            
+
+;-------------------------------------------------------------------------------
+; Stack Pointer definition
+;-------------------------------------------------------------------------------
+            .global __STACK_END
+            .sect   .stack
+            
+;-------------------------------------------------------------------------------
+; Interrupt Vectors
+;-------------------------------------------------------------------------------
+            .sect   ".reset"                ; MSP430 RESET Vector
+            .short  RESET
+            
