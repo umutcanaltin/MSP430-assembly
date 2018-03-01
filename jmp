@@ -29,17 +29,17 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
 ; Main loop here
 
 movlist		mov.w 	#list1,r15
-			mov.w 	#10000,r14
-			mov.w	#0,r9
-			mov.w 	#list2,r8
-loop 	mov.w @r15,r13 ; M(r15) ‡ r13
-			add.w #2,r15 ; r15 += 2 (move to the next element)
-			cmp.w r15,r8
-			jn	$
-			cmp.w r14,r13
-			jn loop
-			add.w #1,r9
-			jmp loop
+		mov.w 	#10000,r14
+		mov.w	#0,r9
+		mov.w 	#list2,r8
+loop 		mov.w @r15,r13 ; M(r15) ‡ r13
+		add.w #2,r15 ; r15 += 2 (move to the next element)
+		cmp.w r15,r8
+		jn	$
+		cmp.w r14,r13
+		jn loop
+		add.w #1,r9
+		jmp loop
 
 
 
